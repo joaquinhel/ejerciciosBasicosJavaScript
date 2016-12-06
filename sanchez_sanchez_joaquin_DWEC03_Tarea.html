@@ -1,0 +1,226 @@
+
+<html>
+    <head>
+        <title>TAREA 3. DWEC. </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script type='text/javascript'>
+
+            //CREAMOS LA VENTANA NUEVA NO REDIMENSIONABLE CON LOS DATOS DEL NAVEGADOR
+            function datosNavegador(miVentana) {
+                // Escribimos el título
+                miVentana.document.write("<h3>Ejemplo de nueva ventana</h3>" + "<hr/>");
+                //Escribimos la URL completa
+                miVentana.document.write("<b>URL Completa: </b>" + miVentana.location.href + "<br/>");
+                // Escribimos el protocolo utilizado
+                miVentana.document.write("<b>Protocolo utilizado: </b>" + miVentana.location.protocol + "<br/>");
+                // Escribimos el nombre del navegador
+                miVentana.document.write("<b>Nombre en código del navegador: </b>" + miVentana.navigator.appCodeName + "<br/>");
+                // Comprobamos si Java está habilitad        
+                miVentana.document.write("<b>Java: </b>" + (miVentana.navigator.javaEnabled() ? "Disponible en esta ventana" : "No disponible en esta ventana") + "<br/> <br/>");
+
+                /* Mostramos un iframe dentro de la ventana con el contenido de una página web. Puesto que no se puede 
+                 * conectar a la web de Google, tal como pide la tarea, ya que google bloquea el contenido  
+                 * cuando este se intenta llamar desde una url ajena cargo otra web */
+                miVentana.document.write("<iframe src='http://www.as.com' width='800' height='600'></iframe>");
+            }
+
+            // Creamos una ventana nueva, con un tamaño específico de 1024x760 y no redimensionable
+            var emergente = window.open("", "Ejemplo de ventana nueva", "width='1024' height='760 resizable=false, top=30, left=30'");
+
+            // Llamamos a la función "datosNavegador" pasándole la ventana emergente que acabamos de crear
+            datosNavegador(emergente);
+
+
+            //AHORA PASAMOS A LA VENTANA PRINCIPAL
+
+            //Creamos la función para la entrada de nombre 
+            function pedirNombre()
+            {
+                var nombre;
+                do {
+                    // Pedimos el nombre al usuario
+                    nombre = window.prompt("Introduzca su nombre");
+                    /* Comprobamos que la entrada no esté en blanco ni este compuesta por 
+                     números y en tal caso mostramos un alert avisando de ello*/
+                    if (!nombre || nombre == "" || nombre == null || nombre.length <= 2 || !isNaN(nombre)) {
+                        alert("No se aceptan nombres de menos de tres caracteres ni solamente números");
+                    }
+                }
+                while (!nombre || nombre == "" || nombre == null || nombre.length <= 2 || !isNaN(nombre));
+                // Devolvemos el valor al usuario
+                return nombre;
+            }
+
+            //Creamos la función para la entrada de los apellidos 
+            function pedirApellidos()
+            {
+                var apellidos;
+                do {
+                    // Pedimos el apellido al usuario
+                    apellidos = window.prompt("Introduzca sus apellidos");
+                    /* Comprobamos que la entrada no esté en blanco ni este compuesta por 
+                     números y en tal caso mostramos un ALERT avisando de ello*/
+                    if (!apellidos || apellidos == "" || apellidos == null || apellidos.length <= 2 || !isNaN(apellidos)) {
+                        alert("No se aceptan apellidos de menos de tres caracteres ni solamente números");
+                    }
+                }
+                while (!apellidos || apellidos == "" || apellidos == null || apellidos.length <= 2 || !isNaN(apellidos));
+                // Devolvemos el valor al usuario
+                return apellidos;
+            }
+
+            //Creamos una función para la entrada de los dias, meses y años de la fecha de naciemiento
+            function pedirNumero(peticionDatos, textoError)
+            {
+                /*Definimos dos variables, una para almacenar los datos del usuario
+                 *  y otra para controar las validaciones*/
+                var entrada;
+                var salida;
+                do
+                {
+                    // Pedimos los datos de entrada al usuario
+                    entrada = window.prompt(peticionDatos);
+                    /*Validamos el valor introducido usando expresiones regulares y almacenamos el resultado 
+                     * en la variable de validación(salida)*/
+                    salida = new RegExp("^[0-9]+$").exec(entrada);
+                    // Comprobamos si la validación es correcta
+                    if (!salida)
+                    {
+                        // Si no es correcta, mostramos un mensaje de aviso al usuario
+                        alert(textoError);
+                    }
+                    // Iteramos mientras la validación no sea correcta
+                } while (!salida)
+                // Devolvemos el valor
+                return entrada;
+            }
+
+            /*Hacemos tres llamadas al metodo anterior, en la primera se pedirá el día de nacimiento, en la segunda el mes
+             y en la tercera el año*/
+            var dia = pedirNumero("Introduzca el día de su nacimiento", "Sólo se aceptan dígitos del 0 al 9");
+            var mes = pedirNumero("Introduzca el mes de su nacimiento", "Sólo se aceptan dígitos del 0 al 9");
+            var año = pedirNumero("Introduzca el año de su nacimiento", "Sólo se aceptan dígitos del 0 al 9");
+
+            //Debemos controlar que los datos introducidos sean correcto, para ello utilizamos la función "validaFecha"
+            function validaFecha(valorDia, valorMes, valorAño) {
+                var fechaActual = new Date();
+                var fechaCorrecta;
+                // Calculamos si el año introducido es bisiesto
+                var bisiesto = ((valorAño % 4 == 0) && ((!(valorAño % 100 == 0)) || (valorAño % 400 == 0))) ? 29 : 28;
+                // si hemos puesto a febrero un número de días superior al adecuado
+                if (valorMes == 2 && valorDia > bisiesto) {
+                    fechaCorrecta = false;
+                    // Si los meses que tienen hasta 31 días contiene un número superior
+                } else if ((valorMes == 1 || valorMes == 3 || valorMes == 5 || valorMes == 7 || valorMes == 8 || valorMes == 10 || valorMes == 12) && (valorDia > 31)) {
+                    fechaCorrecta = false;
+                    // Si los meses de 30 días tienen mas
+                } else if ((valorMes == 4 || valorMes == 6 || valorMes == 9 || valorMes == 11) && (valorDia > 30)) {
+                    fechaCorrecta = false;
+                    // Si los años son inferiores a 1900 o superiores al actual la entrada no es correcta
+                } else if (valorAño < 1900 || valorAño > fechaActual.getFullYear()) {
+                    fechaCorrecta = false;
+                    // si ponemos dias o meses nulos o negativos, o si el mes es superior a 12
+                } else if (valorDia < 1 || valorMes < 1 || valorMes > 12) {
+                    fechaCorrecta = false;
+                    // si no se ha producido ningún error
+                } else {
+                    fechaCorrecta = true;
+                }
+                return fechaCorrecta;
+            }
+
+            //Hacemos una llamada al método validaFecha para comprobar si los datos introducidmos son correctos
+            var validar = validaFecha(dia, mes, año);
+
+
+            //Cuando la validación sea "false" mediante el bloque do-while pediremos que se vuelvan a introducir los datos
+            do {
+                if (validar == false) {
+                    alert("Alguno de los datos introducidos es incorrecto, vuelva a intentarlo");
+                    var dia = pedirNumero("Introduzca el día de su nacimiento", "Sólo se aceptan dígitos del 0 al 9");
+                    var mes = pedirNumero("Introduzca el mes de su nacimiento", "Sólo se aceptan dígitos del 0 al 9");
+                    var año = pedirNumero("Introduzca el año de su nacimiento", "Sólo se aceptan dígitos del 0 al 9");
+                    var validar = validaFecha(dia, mes, año)
+                }
+            } while (validar == false) //Mientras los datos no sean corectos no salimos del bucle
+            {
+                alert("Fecha de nacimiento CORRECTA, pulse ACEPTAR para continuar")
+            }
+
+        //Función para el cálculo de la edad, una vez que los datos ya han sido validados.
+            function calculaEdad(diaNac, mesNac, añoNac) {
+                fechaActual = new Date(); //Variable que almacena la fecha actual
+                edad = fechaActual.getFullYear() - añoNac; //Devuelve los cuatro dígitos del año y le restamos el año de nacimiento del usuario
+                if (mesNac > fechaActual.getMonth() + 1) { //Si el mes introducido es mayor al actual en digitos (0-11)
+                    edad -= 1; //Le restamos 1 a la edad porque aún no ha cumplido los años
+                } else if (mesNac == fechaActual.getMonth() + 1) { //Si el mes actual es el de nacimiento del usuario
+                    if (diaNac > fechaActual.getDate()) { //Comprobamos si ya ha llegado el día de nacimiento (1-31)
+                        edad -= 1; //Si aún no ha llegado le restamos uno.
+                    }
+                }
+                return edad;
+            }
+
+
+        //MOSTRAMOS LOS RESULTADOS TAL Y COMO SE NOS PIDE EN EL ENUNCIADO
+
+            //Llamamos a los métodos en los que introducimos el nombre y apellido:
+            var nombre = pedirNombre();
+            var apellidos = pedirApellidos();
+
+            //Unimos las dos variables anteriores
+            nombreCompleto = nombre + " " + apellidos;
+
+            //Pasamod el nombre a mayúsculas
+            var nomMay = nombreCompleto.toUpperCase();
+
+            // En la ventana principal escribimos la cabecera
+            window.document.write("<h1>TAREA DWEC03</H1><HR />");
+            
+            //Saludamos al usuario
+            window.document.write("<b>Buenos días</b>: " + nombre + "<br/></br>");
+            
+            //Calculamos la longitud del nombre completo
+            window.document.write("<b>Tú nombre completo tiene </b>" + nombreCompleto.length + " <b> caracteres, incluidos espacios.</b>" + "<br/>");
+            
+            /*Calculamos la posición de la primera "A", para ellos utilizo la variable en que todas las letras son están en mayusculas,
+             ya que no es lo mismo "a" que "A"*/
+            window.document.write("<b>La primera letra 'A'de tu nombre está en la posición: </b>" + (nomMay.indexOf('A') + 1) + "</br>");
+            
+            /*Calculamos la posición de la última "A", para ellos utilizo la variable en que todas las letras son están en mayusculas,
+             ya que no es lo mismo "a" que "A"*/
+            window.document.write("<b>La última letra 'A'de tu nombre está en la posición: </b>" + (nomMay.lastIndexOf('A') + 1) + "</br>");
+            
+            //Escribimos el nombre menos las tres primeras letras
+            window.document.write("<b>Tu nombre menos las 3 primeras letras es: </b>" + nombreCompleto.substring(3, nombreCompleto.lenght) + "<br/>");
+            
+            //Representamos el nombre completo en mayúscula
+            window.document.write("<b>Tú nombre todo en mayúsculas es: </b>" + nomMay + "<br/></br>");
+            
+            //Hacemos una llamada al método calculaEdad que recibe como parámetros el día, mes y año introducidos por el usuario
+            //Despues imprimimos la edad por pantalla
+            var tuEdad = calculaEdad(dia, mes, año);
+            window.document.write("<b>Tu edad es de</b>: " + edad + "<b> años</b>" + "<br/>");
+            
+            //Creamos un array con los días de la semana. Ponemos domingo el primero para que coincida con los valores 
+            //devueltos por el método de "date" "getDay" que otorga al domingo el 0
+            //getFullYear nos devuelve el año con formato XXXX
+            var dias_semana = new Array('domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado');
+            var fecha = new Date(año, (mes - 1), dia); //Puesto que los meses van de 0 a 11 en JavaScript, tengo que restarle 1 al introducido por el ususario
+            window.document.write("<b>Naciste un feliz</b> " + dias_semana[fecha.getDay()] + " <b> del año </b>" + fecha.getFullYear() + "<br/></br>");
+            
+            // Calculamos y mostramos el coseno de 180
+            window.document.write("<b>El coseno de 180 es</b>: " + Math.cos(180) + "<br/>");
+            
+            // Calculamos el número mayor de la serie propuesta 
+            window.document.write("<b>El número mayor de (34, 67, 23, 75, 35, 19) es</b>: " + Math.max(34, 67, 23, 75, 35, 19) + "<br/>");
+            
+            // Calculamos un número aleatorio y lo redondeamos hacía arriba (Math.ceil). Math.random() determina un número entre 0 y 1
+            window.document.write("<b>Ejemplo de número al azar: </b>" + Math.ceil(Math.random() * 10001));
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>TAREA 2. DAWEC</title>
+    </head>
+
+    <!--Establezco un color de fondo azulado, sobre el cual el texto se pueda ver de forma adecuda-->
+    <body bgcolor="#CEE3F6">
+        <h2>Tarea 2. DESARROLLO DE APLICACIONES CLIENTE SERVIDOR.</h2>
+        <h3>JOAQUÍN SÁNCHEZ SÁNCHEZ </h3>
+
+        <!--Intoduzco una tabla que me ayude a mostrar los resultados con claridad. La tabla ocupara el 95% del estará dividida en 4 columnas cada una de las cuales ocupará el 25% del espacio. 
+Las tres primeras columnas nos mostraran las tablas de multiplicar, sumar y divir y en la última colocaré el ejercicio de desplazamiento de bits-->
+ <table width="100%" border="1" cellspacing="5" cellpadding="15">
+     <tr>
+         <td width="25%"><b>TABLA DE MULTIPLICAR DEL 7</b></td>
+         <td width="25%"><b>TABLA DE SUMAR DEL 8</h4></b>
+         <td width="25%"><b>TABLA DE DIVIDIR DEL 9</h4></b>
+         <td width="25%"><b>OPERACIONES DE DESPLAZAMIENTO DE BITS</b></td>
+    </tr>
+
+    <tr>
+        <td> 
+            <script type="text/javascript">
+                /*En este bloque de JavaScript realizo el bucle for para la tabla de multiplicar del 7*/
+                var a = 7; //Declaración de las variables
+                for (i=0; i<=10; i++) 
+                { 
+                    document.write(a +" * " + i+ "= " +(a*i), "<br/>" );
+                } 
+            </script>
+        </td>
+
+        <td>
+            <script type="text/javascript">
+                /*En este bloque de JavaScript realizo el bucle while para la tabla de sumar del 8*/
+                var i=0,b=8;  //Declaración de las variables
+                while (i<=10) 
+                {      
+                    document.write(b + "+" +i+ " = " +(b+i), "<br/>");
+                    i++;        
+                } 
+            </script>
+        </td>
+
+        <td>
+            <script type="text/javascript">
+                /*En este bloque de JavaScript realizo el bucle do-while para la tabla de dividir del 9*/
+                var i=0,c=9; //Declaro las variables
+                do 
+                {      
+                    document.write(c+ " / "+i+" = "+(c/i), "<br/>");
+                    i++;        
+                }
+                while (i<=10);
+            </script>  
+        </td>
+
+
+        <td>
+            <script type="text/javascript">
+                // El desplazamiento a la derecha implica división por 2:
+                document.write("<b>DIVISIONES CON DESPLAZAMIENTO DE BITS: </b><br/> ");
+
+                // 2 elevado a 3 es igual a 8 por lo que para dividir entre 8 hemos de poner >>3
+                document.write("125/8="+(125>>3),  "<br/>");
+                // 2 elevado a 1 es igual a 2 por lo que para dividir entre 2 hemos de poner >>1
+                document.write("25/2="+ (25>>1),  "<br/>");
+                document.write("<br/> ");
+
+                // El desplazamiento a la izquierda implica multiplicación por 2:
+                document.write("<b>MULTIPLICACIONES CON DESPLAZAMIENTO DE BITS: </b> <br/> ");
+
+                // 2 elevado a 2 es igual a 4 por lo que para multiplicar por 4 hemos de poner <<2
+                document.write("40*4="+(40<<2),  "<br/>");
+                // 2 elevado a 4 es igual a 16 por lo que para multiplicar por 16 hemos de poner <<4
+                document.write("10*16="+(10<<4),  "<br/>");
+
+            </script>
+
+        </td>
+    </tr>
+    </table>
+</body>
+</html>
